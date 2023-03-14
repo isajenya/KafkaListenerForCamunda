@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="_DdZocL47EeOQo_IRkjDF6w" targetNamespace="http://camunda.org/schema/1.0/bpmn" exporter="Camunda Modeler" exporterVersion="5.1.0" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+  <bpmn2:process id="kafkaListenerProcess" name="Kafka Listener Process" isExecutable="true">
+    <bpmn2:startEvent id="StartEvent_1" name="Kafka Process Start">
+      <bpmn2:outgoing>Flow_1ycoi8h</bpmn2:outgoing>
+    </bpmn2:startEvent>
+    <bpmn2:sequenceFlow id="Flow_1ycoi8h" sourceRef="StartEvent_1" targetRef="Activity_1crpbsn" />
+    <bpmn2:serviceTask id="Activity_1crpbsn" name="Send Kafka Record" camunda:type="external" camunda:topic="sendKafkaRecord">
+      <bpmn2:incoming>Flow_1ycoi8h</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_1c5juzf</bpmn2:outgoing>
+    </bpmn2:serviceTask>
+    <bpmn2:sequenceFlow id="Flow_1c5juzf" sourceRef="Activity_1crpbsn" targetRef="Activity_1atawrx" />
+    <bpmn2:receiveTask id="Activity_1atawrx" name="Wait for record on Kafka" messageRef="Message_37q16g1">
+      <bpmn2:incoming>Flow_1c5juzf</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_19z8xcj</bpmn2:outgoing>
+    </bpmn2:receiveTask>
+    <bpmn2:endEvent id="Event_1dd1cub">
+      <bpmn2:incoming>Flow_19z8xcj</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:sequenceFlow id="Flow_19z8xcj" sourceRef="Activity_1atawrx" targetRef="Event_1dd1cub" />
+    <bpmn2:textAnnotation id="TextAnnotation_0k1pblj">
+      <bpmn2:text>Topic name: sendKafkaRecord</bpmn2:text>
+    </bpmn2:textAnnotation>
+    <bpmn2:association id="Association_0u3r5b3" sourceRef="TextAnnotation_0k1pblj" targetRef="Activity_1crpbsn" />
+  </bpmn2:process>
+  <bpmn2:message id="Message_37q16g1" name="MsgKafkaRecordReceived" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="kafkaListenerProcess">
+      <bpmndi:BPMNShape id="TextAnnotation_0k1pblj_di" bpmnElement="TextAnnotation_0k1pblj">
+        <dc:Bounds x="221" y="90" width="188" height="36" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1ycoi8h_di" bpmnElement="Flow_1ycoi8h">
+        <di:waypoint x="206" y="202" />
+        <di:waypoint x="260" y="202" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1c5juzf_di" bpmnElement="Flow_1c5juzf">
+        <di:waypoint x="360" y="202" />
+        <di:waypoint x="420" y="202" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_19z8xcj_di" bpmnElement="Flow_19z8xcj">
+        <di:waypoint x="520" y="202" />
+        <di:waypoint x="582" y="202" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_3" bpmnElement="StartEvent_1">
+        <dc:Bounds x="170" y="184" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="153" y="227" width="72" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0mbqvg5_di" bpmnElement="Activity_1crpbsn">
+        <dc:Bounds x="260" y="162" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0yru4a9_di" bpmnElement="Activity_1atawrx">
+        <dc:Bounds x="420" y="162" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1dd1cub_di" bpmnElement="Event_1dd1cub">
+        <dc:Bounds x="582" y="184" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_0u3r5b3_di" bpmnElement="Association_0u3r5b3">
+        <di:waypoint x="310" y="130" />
+        <di:waypoint x="310" y="162" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>

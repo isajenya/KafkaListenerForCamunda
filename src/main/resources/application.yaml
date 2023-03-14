@@ -1,0 +1,12 @@
+camunda.bpm.admin-user:
+  id: demo
+  password: demo
+
+camunda.bpm.client:
+  base-url: http://localhost:8080/engine-rest #URL of Process Engine
+  lock-duration: 6000000 # time in ms & external task will be locked
+  max-tasks: 1 # Specifies the maximum amount of task that can be fetched within one request.
+  async-response-timeout: 10000
+spring:
+  kafka:
+    bootstrap-servers: localhost:9092
